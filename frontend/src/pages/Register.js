@@ -7,29 +7,27 @@ function Register() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const navigate = useNavigate();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setSuccess('');
-    try {
-      const res = await fetch('http://localhost:3000/users/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
-      const data = await res.json();
-      if (data.message) {
-        setSuccess('User registered! Redirecting to login...');
-        setTimeout(() => navigate('/login'), 1200);
-      } else {
-        setError(data.error || 'Registration failed');
-      }
-    } catch (err) {
-      setError('Registration failed');
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
+  setSuccess('');
+  try {
+    const res = await fetch('https://movieflix-dashboard-the-ultimate-movie-gekj.onrender.com/users/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    });
+    const data = await res.json();
+    if (data.message) {
+      setSuccess('User registered! Redirecting to login...');
+      setTimeout(() => navigate('/login'), 1200);
+    } else {
+      setError(data.error || 'Registration failed');
     }
-  };
-
+  } catch (err) {
+    setError('Registration failed');
+  }
+};
   return (
     <div style={{ maxWidth: 400, margin: 'auto', padding: 16 }}>
       <h2>Register</h2>
